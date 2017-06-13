@@ -11,7 +11,7 @@
     "prod:stop": "pm2 delete server",
     "test": "eslint src && jest --coverage",
     "precommit": "npm test",
-    "prepush": "npm test && npm prod:build"
+    "prepush": "npm test && npm run prod:build"
   },
   "author": "",
   "license": "ISC",

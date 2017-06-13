@@ -13,7 +13,6 @@ app.use(STATIC_PATH, express.static('public'));
 
 app.get('/', (req, res) => {
 	res.send(renderApp(APP_NAME));
-	console.log(renderApp(APP_NAME));
 });
 
 app.listen(WEB_PORT, () => {
