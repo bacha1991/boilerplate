@@ -11,9 +11,7 @@
     "prod:start": "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
     "prod:stop": "pm2 delete server",
     "lint": "eslint src webpack.config.babel.js --ext .js,.jsx",
-    "test": "npm run lint src && jest --coverage",
-    "precommit": "npm test",
-    "prepush": "npm test && npm run prod:build"
+    "test": "npm run lint src && jest --coverage"
   },
   "author": "",
   "license": "ISC",
@@ -35,8 +33,10 @@
     "express": "^4.15.3",
     "flow-bin": "^0.47.0",
     "husky": "^0.13.4",
+    "immutable": "^4.0.0-rc.2",
     "jest": "^20.0.4",
     "nodemon": "^1.11.0",
+    "redux-actions": "^2.0.3",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-hot-loader": "^3.0.0-beta.7"
@@ -48,6 +48,8 @@
     "babel-preset-react": "^6.24.1",
     "cross-env": "^5.0.1",
     "pm2": "^2.5.0",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.0",
     "rimraf": "^2.6.1",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5"
