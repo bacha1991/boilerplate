@@ -11,7 +11,9 @@
     "prod:start": "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
     "prod:stop": "pm2 delete server",
     "lint": "eslint src webpack.config.babel.js --ext .js,.jsx",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "precommit": "npm run test",
+    "prepush": "npm run test"
   },
   "author": "",
   "license": "ISC",
