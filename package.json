@@ -8,15 +8,18 @@
     "dev:start": "nodemon -e js,jsx --ignore lib --ignore dist --exec babel-node src/server",
     "dev:wds": "webpack-dev-server --progress",
     "prod:build": "rimraf lib && babel src -d lib --ignore .test.js",
-    "prod:start": "cross-env NODE_ENV=production pm2 start lib/server && pm2 logs",
-    "prod:stop": "pm2 delete server",
+    "prod:start": "heroku local",
     "lint": "eslint src webpack.config.babel.js --ext .js,.jsx",
     "test": "jest --coverage",
     "precommit": "npm run test",
-    "prepush": "npm run test"
+    "prepush": "npm run test",
+    "heroku-postbuild": "npm run prod:build"
   },
   "author": "",
   "license": "ISC",
+  "engines": {
+      "node": "7.x"
+    },
   "dependencies": {
     "babel-cli": "^6.24.1",
     "babel-eslint": "^7.2.3",
@@ -61,7 +64,6 @@
     "babel-plugin-flow-react-proptypes": "^3.3.0",
     "babel-preset-react": "^6.24.1",
     "cross-env": "^5.0.1",
-    "pm2": "^2.5.0",
     "rimraf": "^2.6.1",
     "webpack": "^2.6.1",
     "webpack-dev-server": "^2.4.5"
