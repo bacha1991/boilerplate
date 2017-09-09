@@ -54,8 +54,6 @@
 					if (!isBiggestTile) {
 						conf.h += tileRow - prevH;
 						conf.w += tileCol - prevW;
-						prevH = tileRow;
-						prevW = tileCol;
 					}
 					array[tileCol-1] = null;
 				}
@@ -78,6 +76,23 @@
 		});
 
 		console.log('New result', result);
+		/*
+			const data = [
+				[[1,1],[1,2]],
+				[[1,3]],
+				[[1,4]],
+				[[2,1], [3,1]],
+				[[2,2]],
+				[[2,3],[2,4],[3,3],[3,4]],
+				[[3,2]]
+			];
+			After reduce result will be -
+			[
+				[{…}, null, {…}, {…}],
+				[{…}, {…}, {…}, null],
+				[null, {…}, null, null]
+			]
+		*/
 	</script>
 </body>	
 </html>
