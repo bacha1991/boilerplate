@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test</title>
+</head>
+<body>
+	<style type="text/css">
+		#block {
+			position: relative;
+			background-color: green;
+			width: 400px;
+			height: 300px;
+		}
+		#block>div {
+			position: absolute;
+			background-color: red;
+			outline: 1px solid black;
+		}
+	</style>
+	<div id='block'></div>`
+	<script type="text/javascript">
+		const data = [
+			[[1,1],[1,2]],
+			[[1,3]],
+			[[1,4]],
+			[[2,1], [3,1]],
+			[[2,2]],
+			[[2,3],[2,4],[3,3],[3,4]],
+			[[3,2]]
+		];
+		const step = '100';
+		let result = [];
+
+		data.reduce((tilesArray, tile)=>{
+			const isBiggestTile = tile.length > 2;
+			let conf, prevH, prevW;
+
+			tile.forEach((tilePar, j)=>{
+				let tileRow = tilePar[0];
+				let tileCol = tilePar[1];
+				let array = tilesArray[tileRow-1] = tilesArray[tileRow-1] || [];
+
+				if (!conf) {
+					conf = {
+						h: isBiggestTile ? 2 : 1,
+						w: isBiggestTile ? 2 : 1
+					};
+					if (!isBiggestTile) {
+						prevH = tileRow;
+						prevW = tileCol;
+					}
+					array[tileCol-1] = conf;
+				} else {
+					if (!isBiggestTile) {
+						conf.h += tileRow - prevH;
+						conf.w += tileCol - prevW;
+						prevH = tileRow;
+						prevW = tileCol;
+					}
+					array[tileCol-1] = null;
+				}
+			});
+			return tilesArray;
+		}, result);
+
+		let blockEl = document.getElementById('block');
+
+		result.forEach((row, i)=>{
+			row.forEach((tile,j)=>{
+				if (!tile) return;
+				const div = document.createElement('div');
+				div.style['top'] = i * step + 'px';
+				div.style['left'] = j * step + 'px';
+				div.style['width'] = tile.w * step + 'px';
+				div.style['height'] = tile.h * step + 'px';
+				blockEl.appendChild(div);
+			});
+		});
+
+		console.log('New result', result);
+	</script>
+</body>	
+</html>
