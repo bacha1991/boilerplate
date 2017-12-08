@@ -1,4 +1,10 @@
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+
 import { STATIC_PATH } from '../shared/config';
+import Title from '../shared/component/Title';
+
+const html = ReactDOMServer.renderToString(<Title />);
 
 const renderApp = (title) =>
 `<!doctype html>
@@ -8,7 +14,7 @@ const renderApp = (title) =>
     <link rel="stylesheet" href="${STATIC_PATH}/css/style.css">
   </head>
   <body>
-    <h1>${title}</h1>
+    <div clas="root">${html}</div>
   </body>
 </html>`;
 
