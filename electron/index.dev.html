@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/javascript">
+  		const { WDS_PORT } = require('./src/shared/config');
+  		const script = document.createElement('script');
+  		script.src = `http://localhost:${WDS_PORT}/dist/bundle.js`;
+  		document.body.appendChild(script);
+    </script>
+  </body>
+</html>
