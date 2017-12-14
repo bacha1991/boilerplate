@@ -9,45 +9,39 @@ import {
 	FETCH_PAGE_FAILURE,
 } from './actionsName';
 
-export const fetchPageRequest = createAction(FETCH_PAGE_REQUEST);
-export const fetchPageSuccess = createAction(FETCH_PAGE_SUCCESS);
-export const fetchPageFailure = createAction(FETCH_PAGE_FAILURE);
+const fetchPageRequest = createAction(FETCH_PAGE_REQUEST);
+const fetchPageSuccess = createAction(FETCH_PAGE_SUCCESS);
+const fetchPageFailure = createAction(FETCH_PAGE_FAILURE);
 
 export default function fetchPage(page, dispatch) {
-	let timeout;
+	const URL = autoRiaModule.getURL(page);
+	let timeout = setTimeout(() => {
+		dispatch(fetchPageFailure());
+		console.error('Timeout', URL);
+	}, 10000);
+
+	let array = [];
+	for (let i = 0; i < 10; i++) {
+		array.push(i)
+	}
+
 	dispatch(fetchPageRequest());
 
-	https.get(autoRiaModule.getURL(page), (res) => {
-	  const { statusCode } = res;
-	  const contentType = res.headers['content-type'];
-
-	  if (statusCode !== 200) {
-	    error = new Error(`Request Failed.\n Status Code: ${statusCode}`);
-	  }
-
-	  res.setEncoding('utf8');
-	  let rawData = '';
-	  res.on('data', (chunk) => { rawData += chunk; });
-	  res.on('end', () => {
-	  	const html = rawData;
-	  	rawData = null;
-	    try {
-			const result = autoRiaModule.parseData(html);
+	fetch(URL)
+		.then(resp => resp.text())
+		.then(text => {
+			try {
+			const result = autoRiaModule.parseData(text);
 			dispatch(fetchPageSuccess(result));
-	    } catch (e) {
-	    	dispatch(fetchPageFailure());
-	      	console.error(e.message);
-	    }
+		    } catch (e) {
+		    	dispatch(fetchPageFailure());
+		      	console.error(e);
+		    }
 
-	    clearTimeout(timeout);
-	  });
-	}).on('error', (e) => {
-		dispatch(fetchPageFailure());
-		console.error(`Got error: ${e.message}`);
-	});
-
-	timeout = setTimeout(() => {
-		dispatch(fetchPageFailure());
-		console.error('Timeout',autoRiaModule.getURL(page));
-	}, 10000);
+		    clearTimeout(timeout);
+		})
+		.catch(function(error) {
+			dispatch(fetchPageFailure());
+			console.log(`There has been a problem fetch ${URL}: ` + error.message);
+		});
 }

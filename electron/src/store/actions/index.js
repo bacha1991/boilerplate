@@ -11,7 +11,8 @@ export const fetchPageAction = (page) => (dispatch) => {
 };
 
 export const changePage = (page) => (dispatch) => {
-	dispatch(createAction(CHANGE_PAGE)(page));
+	const changePage = createAction(CHANGE_PAGE);
+	dispatch(changePage(page));
 	fetchPage(page, dispatch);
 };
 

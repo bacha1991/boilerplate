@@ -20,7 +20,6 @@ export default function appState(state = initialState, action) {
 		case FETCH_PAGE_REQUEST:
 			return state.set('statusLoading', true);
 		case FETCH_PAGE_SUCCESS:
-
 			return state.withMutations(s => {
 				s.set('statusLoading', false);
 				if (action.payload) {

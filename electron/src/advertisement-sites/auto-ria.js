@@ -1,24 +1,25 @@
-const $ = require('cheerio').load;
+import { load as $ } from 'cheerio';
 
-export function parseData(html) {
-	var parsedResult = [];
+export function parseData(text) {
+	const parsedResult = [];
 	
 	//remove comments
-	html = html.replace(/<!--[\s\S]*?-->/g, '');
-
-	const layout = $(html);
+	let html = text.replace(/<!--[\s\S]*?-->/g, '');
+	html = $(html);
 
 	// remove unnecessary elements
-	layout('header, title, style, script, noscript, footer, link, meta, noindex').remove();
+	html('header, title, style, script, noscript, footer, link, meta, noindex').remove();
 
  	//const reg = /class="content-bar"[\s\S]*(https:\/\/auto.ria.com\/auto_\w*.html)[\s\S]*[Сс][Рр][Оо][Чч][Нн][Оо|Аа][Яя]?/g;
 	
-	const result = layout('section.ticket-item').filter((index, item) => {
-		if ($(item)('.descriptions-ticket').text().match(/[Сс][Рр][Оо][Чч][Нн][Оо|Аа][Яя]?/g)) {
-			var imgSrc = $(item)('img').attr('src');
-			var href = $(item)('.content-bar a').attr('href');
-			var decription = $(item)('.content').text();
-			var priceTicket = $(item)('.price-ticket>span').text();
+	const result = html('section.ticket-item').filter((index, item) => {
+		const text = $(item)('.descriptions-ticket').text();
+
+		if (text.match(/[Сс][Рр][Оо][Чч][Нн][Оо|Аа][Яя]?/g)) {
+			const imgSrc = $(item)('img').attr('src');
+			const href = $(item)('.content-bar a').attr('href');
+			const decription = $(item)('.content').text();
+			const priceTicket = $(item)('.price-ticket>span').text();
 			parsedResult.push({
 				imgSrc,
 				href,
@@ -29,8 +30,6 @@ export function parseData(html) {
 		}
 	});
 	return parsedResult;
-	// console.log(parsedResult);
-	// return  result ? result.html() : layout.html();
 };
 
 export const getURL = (page) => `https://auto.ria.com/legkovie/?page=${page || 0}`;
