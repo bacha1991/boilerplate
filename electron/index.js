@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 const colors = require('colors');
+const glob = require('glob');
 const debug = /--debug/.test(process.argv[2]);
 const { isProd } = require('./src/shared/util');
 

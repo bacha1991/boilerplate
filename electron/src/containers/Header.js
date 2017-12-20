@@ -2,15 +2,17 @@ import React from 'react';
 import https from 'https';
 import { connect } from 'react-redux';
 
-import { changePage, fetchPage } from '../store/actions';
+import { changePage, fetchPageAction } from '../store/actions';
 import Header from '../components/Header';
 
 const mapStateToProps = (state) => ({
-	fetchedPages: state.get('fetchedPages'),
+	fetchedPages: state.fetchedPages,
+	// fetchedPages: state.get('fetchedPages'),
 });
 
 const mapDispatchToProps = (dispatch) => ({
-	changePage: (nextPage) => dispatch(changePage(nextPage)),
+	// changePage: () => dispatch(changePage()),
+	fetchPageAction: () => dispatch(fetchPageAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

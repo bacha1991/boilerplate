@@ -4,8 +4,12 @@ import { connect } from 'react-redux';
 import Loader from '../components/Loader';
 
 const mapStateToProps = (state) => {
+	const { fetchedPages, statusLoading } = state;
 	return {
-		statusLoading: state.get('statusLoading'),
+		fetchedPages: fetchedPages,
+		// countPages: state.get('countPages'),
+		statusLoading: statusLoading,
+		// statusLoading: state.get('statusLoading'),
 	};
 };
 

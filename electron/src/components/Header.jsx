@@ -11,14 +11,13 @@ class Header extends Component {
 	}
 
 	fetchPageHanler() {
-		let { changePage, fetchedPages } = this.props;
-		changePage(++fetchedPages);
+		let { fetchPageAction } = this.props;
+		fetchPageAction();
 	}
 
 	render() {
 		const { fetchedPages } = this.props;
 		return <header>
-			<h3>Count Fetched page {fetchedPages}</h3>
 			<button onClick={this.fetchPageHanler}>Fetch Next Page</button>
 		</header>;
 	}

@@ -7,12 +7,13 @@ import App from '../components/App';
 
 const mapStateToProps = (state) => {
 	return {
-		activePage: state.get('activePage'),
+		// countPages: state.countPages,
+		// countPages: state.get('countPages'),
 	};
 };
 
 const mapDispatchToProps = (dispatch) => ({
-	fetchPageAction: (page) => {  dispatch(fetchPageAction(page)) }
+	fetchPageAction: () => {  dispatch(fetchPageAction()) }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

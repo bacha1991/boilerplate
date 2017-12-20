@@ -1,1 +1,7 @@
-import	fetchPage from './fetch-page';
+import { fetchPages } from './fetchPages';
+
+const mainProcesses = {
+	fetchPages
+};
+
+export default mainProcesses;

@@ -1,47 +1,34 @@
-import https from 'https';
 import { createAction } from 'redux-actions';
 
-import { autoRiaModule } from '../../advertisement-sites';
+import mainProcesses from '../../../main-process';
 
 import { 
 	FETCH_PAGE_REQUEST,
 	FETCH_PAGE_SUCCESS,
 	FETCH_PAGE_FAILURE,
+	CHANGE_START_PAGE,
 } from './actionsName';
 
 const fetchPageRequest = createAction(FETCH_PAGE_REQUEST);
 const fetchPageSuccess = createAction(FETCH_PAGE_SUCCESS);
 const fetchPageFailure = createAction(FETCH_PAGE_FAILURE);
+const changeStartPage = createAction(CHANGE_START_PAGE);
 
-export default function fetchPage(page, dispatch) {
-	const URL = autoRiaModule.getURL(page);
-	let timeout = setTimeout(() => {
+export default function fetchPage(start, step, dispatch) {
+	const { fetchPages } = mainProcesses;
+
+	const successCallback = (data) => {
+		dispatch(fetchPageSuccess(data));
+		console.log('Success');
+	};
+	const errorCallback = () => {
 		dispatch(fetchPageFailure());
-		console.error('Timeout', URL);
-	}, 10000);
-
-	let array = [];
-	for (let i = 0; i < 10; i++) {
-		array.push(i)
-	}
+		console.log('Error');
+	};
 
 	dispatch(fetchPageRequest());
 
-	fetch(URL)
-		.then(resp => resp.text())
-		.then(text => {
-			try {
-			const result = autoRiaModule.parseData(text);
-			dispatch(fetchPageSuccess(result));
-		    } catch (e) {
-		    	dispatch(fetchPageFailure());
-		      	console.error(e);
-		    }
-
-		    clearTimeout(timeout);
-		})
-		.catch(function(error) {
-			dispatch(fetchPageFailure());
-			console.log(`There has been a problem fetch ${URL}: ` + error.message);
-		});
+	fetchPages(start, step, successCallback, errorCallback);
+	
+	dispatch(changeStartPage());
 }

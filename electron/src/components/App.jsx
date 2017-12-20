@@ -7,12 +7,11 @@ import Advertisements from '../containers/Advertisements';
 class App extends Component {
 	
 	componentDidMount() {
-		const { activePage, fetchPageAction } = this.props;
-		fetchPageAction(activePage);	
+		const { fetchPageAction } = this.props;
+		fetchPageAction();	
 	}
 
 	render() {
-		let { activePage } = this.props;
 		return <div>
 			<Header />
 			<Advertisements />
