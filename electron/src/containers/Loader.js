@@ -3,13 +3,12 @@ import { connect } from 'react-redux';
 
 import Loader from '../components/Loader';
 
-const mapStateToProps = (state) => {
-	const { fetchedPages, statusLoading } = state;
+const mapStateToProps = ({ appState }) => {
+	const { fetchedPages, loadedPages, statusLoading } = appState;
 	return {
-		fetchedPages: fetchedPages,
-		// countPages: state.get('countPages'),
-		statusLoading: statusLoading,
-		// statusLoading: state.get('statusLoading'),
+		fetchedPages,
+		loadedPages,
+		statusLoading,
 	};
 };
 

@@ -7,8 +7,9 @@ import Advertisements from '../containers/Advertisements';
 class App extends Component {
 	
 	componentDidMount() {
-		const { fetchPageAction } = this.props;
-		fetchPageAction();	
+		const { fetchPageAction, initAppAction } = this.props;
+		initAppAction();
+		// fetchPageAction();	
 	}
 
 	render() {

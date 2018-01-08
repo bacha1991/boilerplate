@@ -1,29 +1,34 @@
-// import { createAction } from 'redux-actions';
+import { createAction } from 'redux-actions';
 
 import fetchPage from './fetchPage';
+import mainProcesses from '../../../main-process';
 
-// import { 
-// 	CHANGE_PAGE,
-// } from './actionsName';
+import { 
+	GET_MARKS,
+} from './actionsName';
 
 // const changePageAction = createAction(CHANGE_PAGE);
+const getMarksActions = createAction(GET_MARKS);
 
-export const fetchPageAction = () => (dispatch, getState) => {
-	const { step, startPage } = getState();
-	// const step = getState().get('step');
-	// const start = getState().get('startPage');
+const fetchPageAction = () => (dispatch, getState) => {
+	const { appState: { step, startPage } } = getState();
 	fetchPage(startPage, step, dispatch);
 };
 
-// export const changePage = (page) => (dispatch) => {
-// 	const changePage = createAction(CHANGE_PAGE);
-// 	dispatch(changePage(page));
-// 	fetchPage(page, dispatch);
-// };
+const initAppAction = () => (dispatch, getState) => {
+	const { autoRiaModule: {getMarks} } = mainProcesses;
+	
+	getMarks((data) => {
+		dispatch(getMarksActions(data));
+	}).then(() => {
+		const { appState: { step, startPage } } = getState();
+		fetchPage(startPage, step, dispatch);
+	});
+};
 
-// export const changePage = () => (dispatch, getState) => {
-// 	const { countPages } = getState();
-// 	// const countPages = getState().get('countPages');
-// 	dispatch(changePageAction(countPages));
-// 	fetchPage(countPages, dispatch);
-// };
+const actions = Object.assign({}, {
+	initAppAction,
+	fetchPageAction,
+}, mainProcesses);
+
+export default actions;

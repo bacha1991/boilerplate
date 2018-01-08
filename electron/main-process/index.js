@@ -1,7 +1,7 @@
-import { fetchPages } from './fetchPages';
+import { autoRiaModule } from './advertisement-sites';
 
 const mainProcesses = {
-	fetchPages
+	autoRiaModule
 };
 
 export default mainProcesses;

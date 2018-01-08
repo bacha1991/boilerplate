@@ -1,6 +1,3 @@
-import { getURL, parseData } from './auto-ria';
+import * as autoRia from './auto-ria';
 
-export const autoRiaModule = {
-	getURL,
-	parseData
-};
+export const autoRiaModule = Object.assign({}, autoRia);

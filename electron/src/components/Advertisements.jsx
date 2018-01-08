@@ -9,10 +9,13 @@ class Advertisements extends Component{
 		shell.openExternal(href);
 	}
 
+	shouldComponentUpdate({ statusLoading }) {
+		return !statusLoading;
+	}
+
 	render() {
 		const { advertisements } = this.props;
 		return <div>
-			<h5>Found Cars:<span className="badge badge-secondary">{advertisements.size}</span></h5>
 			<ol className='list-unstyled'>
 				{advertisements.map( (advertisement, i) => {
 					const { imgSrc, href, decription, priceTicket } = advertisement.toJS();
