@@ -1,0 +1,7 @@
+const WDS_PORT = 3000;
+const JSS_SSR_CLASS = 'jss-ssr';
+const JSS_SSR_SELECTOR = `.${JSS_SSR_CLASS}`;
+
+exports.WDS_PORT = WDS_PORT;
+exports.JSS_SSR_CLASS = JSS_SSR_CLASS;
+exports.JSS_SSR_SELECTOR = JSS_SSR_SELECTOR; 
