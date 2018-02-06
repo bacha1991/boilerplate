@@ -1,0 +1,75 @@
+<?DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Naive Infinite Scroller - RxJS</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/5.0.1/Rx.min.js"></script>
+        <style type="text/css">
+            #infinite-scroller {
+              height: 500px;
+              width: 700px;
+              border: 1px solid #f5ad7c;
+              overflow: scroll;
+              padding: 0;
+
+              li {
+                padding : 10px 5px;
+                line-height: 1.5;
+                &:nth-child(odd) {
+                  background : #ffe8d8;
+                }
+                &:nth-child(even) {
+                  background : #f5ad7c;
+                }
+              }
+            }
+        </style>
+    </head>
+    <body>
+        <ul id="infinite-scroller"></ul>
+        <script type="text/javascript">
+            let currentPage = 1;
+            const scrollElem = document.getElementById('infinite-scroller');
+            const scrollEvent$ = Rx.Observable.fromEvent(scrollElem, 'scroll');
+
+            const getQuotesAPI = (page) => `https://node-hnapi.herokuapp.com/news?page=${page}`;
+
+            const processData = (res) => {
+                res.json()
+                    .then((news) => {
+                        currentPage++;
+                        news.forEach(renderNews);
+                    });
+            };
+            const renderNews = (news) => {
+                const { id, title } = news;
+                const li = document.createElement('li');
+                li.innerHTML = `${id} - ${title}`;
+                scrollElem.appendChild(li);
+            }
+
+            const isScrollingDown = ([prev, current]) => prev.sT < current.sT;
+            const isScrollExpectedPercent = ({ sT, cH, sH }, percent) => {
+                return ((sT + cH) / sH) > percent / 100;
+            };
+
+            const userScrollDown$ = scrollEvent$
+                .map(({target}) => ({
+                    sH: target.scrollHeight,
+                    sT: target.scrollTop,
+                    cH: target.clientHeight
+                }))
+                .pairwise()
+                .filter((positions) => {
+                    return isScrollingDown(positions) && isScrollExpectedPercent(positions[1],70);
+                });
+
+            const requestOnScroll$ = userScrollDown$
+                .startWith([])
+                .exhaustMap(() => Rx.Observable.fromPromise(fetch(getQuotesAPI())));
+
+            requestOnScroll$.subscribe(processData);
+        </script>
+    </body>
+</html>
