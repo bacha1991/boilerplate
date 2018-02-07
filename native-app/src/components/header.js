@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-export default class Header extends Component {
-    render() {
-        return(
-            <View style={styles.header}>
-                <Text>Header</Text>
-            </View>
-        );
-    }
-}
+const Header = () => <Text style={styles.header}>App Name</Text>;
 
 const styles = StyleSheet.create({
   header: {
-    alignItems: 'center'
+    alignItems: 'center',
+    color: '#fff',
+    fontSize: '16px',
+    fontWeight: '900'
   }
 });
+
+export default Header;

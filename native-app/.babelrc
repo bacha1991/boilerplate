@@ -1,11 +1,16 @@
 {
-  "presets": [
+    "presets": [
         "babel-preset-expo",
         "react-native"
     ],
-  "env": {
+    "env": {
     "development": {
-      "plugins": ["transform-react-jsx-source"]
+        "plugins": ["transform-react-jsx-source"]
     }
-  }
+    },
+    "plugins": [
+        ["module-alias", [
+            { "src": "./assets", "expose": "assets" }
+        ]]
+    ]
 }
