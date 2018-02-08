@@ -10,7 +10,8 @@
     },
     "plugins": [
         ["module-alias", [
-            { "src": "./assets", "expose": "assets" }
+            { "src": "./assets", "expose": "assets" },
+            { "src": "./src/store", "expose": "store" }
         ]]
     ]
 }

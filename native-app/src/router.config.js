@@ -1,5 +1,5 @@
 import React from 'react';
-import { Main, Info } from './components/Pages';
+import { Main, Info, Details } from './components/Pages';
 import Header from './components/Header';
 
 export const initialRoute = {
@@ -21,5 +21,8 @@ export const routes = {
     Info: {
         screen: Info,
         navigationOptions: {}
+    },
+    Details: {
+        screen: Details
     }
 };

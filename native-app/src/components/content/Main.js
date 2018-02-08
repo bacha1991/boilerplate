@@ -14,7 +14,7 @@ class Main extends Component {
                 />
                 <Button
                     title="News"
-                    onPress={() => navigate('Info', { type: 'News' })}
+                    onPress={() => navigate('Info', { type: 'news' })}
                 />
                 <Button
                     title="Blogs"

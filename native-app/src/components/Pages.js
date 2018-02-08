@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 import Header from './Header';
-import Body, { BodyInfo } from './Bodies';
+import Body, { BodyInfo, BodyDetails } from './Bodies';
 import Footer from './Footer';
 
 const getPage = (Body) => (
@@ -24,7 +24,10 @@ const mapStateToProps = (state, ownProps) => ({
 export const Main = connect(mapStateToProps)(Page);
 
 export class Info extends Component {
-  render = () => getPage(<BodyInfo/>);
+  render = () => getPage(<BodyInfo navigation={this.props.navigation} />);
+}
+export class Details extends Component {
+  render = () => getPage(<BodyDetails />);
 }
 
 const styles = StyleSheet.create({

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import Main from './content/Main';
 import Info from './content/Info';
+import Details from './content/Details';
 
 const bodyWrapper = (Contnet) => (
      <View style={styles.container}>
@@ -23,7 +24,10 @@ const mapStateToProps = (state, ownProps) => ({
 export default connect(mapStateToProps)(Body);
 
 export class BodyInfo extends Component {
-    render = () => bodyWrapper(<Info />);
+    render = () => bodyWrapper(<Info navigation={this.props.navigation} />);
+}
+export class BodyDetails extends Component {
+    render = () => bodyWrapper(<Details />);
 }
 
 const styles = StyleSheet.create({
