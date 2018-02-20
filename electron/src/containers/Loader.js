@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import Loader from '../components/Loader';
 
 const mapStateToProps = ({ appState }) => {
-	const { fetchedPages, loadedPages, statusLoading } = appState;
+	const { fetchedPages, loadedPages, loadingStatus } = appState;
 	return {
 		fetchedPages,
 		loadedPages,
-		statusLoading,
+		loadingStatus,
 	};
 };
 

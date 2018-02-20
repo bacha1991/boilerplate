@@ -33,3 +33,12 @@ html {
     text-align: center;
     padding-top: 2em;
 }
+
+.advertisement:nth-child(2n) {
+    background: #e9ecef;
+    
+}
+.advertisement {
+    margin-bottom: 1em;
+    padding: 0.5em;
+}

@@ -1,22 +1,39 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import actions from '../store/actions';
+import {
+	fetchPageRequest,
+	saveResult,
+	saveMarksActions,
+	pagesLoaded,
+	fetchPageFailure,
+	changeStartPage,
+	saveAverages
+} from '../store/actions';
 
 import App from '../components/App';
 
-const mapStateToProps = (state) => {
+import { getMarkAuto } from './selectors';
+
+const mapDispatchToProps = (dispatch) => {
 	return {
-		// countPages: state.countPages,
-		// countPages: state.get('countPages'),
+		saveMarks: (data) => { dispatch(saveMarksActions(data)) },
+		fetchPageRequest: () => { dispatch(fetchPageRequest()) },
+		saveResult: (data) => { dispatch(saveResult(data)) },
+		pagesLoaded: () => { dispatch(pagesLoaded()) },
+		fetchPageFailure: () => { dispatch(fetchPageFailure()) },
+		changeStartPage: () => { dispatch(changeStartPage()) },
+		saveAverages: (data) => { dispatch(saveAverages(data)) }
 	};
 };
 
-const mapDispatchToProps = (dispatch) => {
-	const { initAppAction } = actions;
+const mapStateToProps = (state) => {
+	const appState = state.appState;
 	return {
-		// fetchPageAction: () => { dispatch(fetchPageAction()) },
-		initAppAction: () => { dispatch(initAppAction()) },
+		step: appState.step,
+		startPage: appState.startPage,
+		loadingStatus: appState.loadingStatus,
+		autoInfo: getMarkAuto(state)
 	};
 };
 

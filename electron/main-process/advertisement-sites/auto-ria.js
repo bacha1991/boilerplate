@@ -18,10 +18,11 @@ function parseData(text) {
 		const text = $(item)('.descriptions-ticket').text();
 
 		if (text.match(/[Сс][Рр][Оо][Чч][Нн][Оо|Аа][Яя]?/g)) {
+			const attribs = item.children[0].attribs;
 			const imgSrc = $(item)('img').attr('src');
 			const href = $(item)('.content-bar a').attr('href');
 			const decription = $(item)('.content').text();
-			const priceTicket = $(item)('.price-ticket>span').text();
+			const priceTicket = $(item)('.price-ticket>span').text().replace(' ', '');
 			const headTicket = $(item)('.head-ticket').text();
 			parsedResult.push({
 				imgSrc,
@@ -29,6 +30,9 @@ function parseData(text) {
 				decription,
 				priceTicket,
 				headTicket,
+				year: attribs['data-year'],
+				mark: attribs['data-mark-name'],
+				model: attribs['data-model-name']
 			});
 			return true;
 		}
@@ -37,10 +41,10 @@ function parseData(text) {
 };
 
 
-export function fetchPages(start, step, success, error) {
+export function fetchPages({startPage, step, success, error}) {
 	let array = [];
 	
-	// for (let i = start; i < start + step; i++) {
+	// for (let i = startPage; i < startPage + step; i++) {
 	// 	fetch(autoRiaModule.getPageURL(i))
 	// 		.then(resp => resp.text())
 	// 		.then(html => {
@@ -57,7 +61,7 @@ export function fetchPages(start, step, success, error) {
 	// 		});
 	// }
 
-	for (let i = start; i < start + step; i++) {
+	for (let i = startPage; i < startPage + step; i++) {
 		array.push(i)
 	}
 
@@ -67,7 +71,7 @@ export function fetchPages(start, step, success, error) {
 				.then(html => {
 					try {
 						const result = parseData(html);
-						success(result);
+						result.length && success(result);
 				    } catch (e) {
 				    	error();
 				      	console.error(e);
@@ -90,5 +94,21 @@ export function getMarks(callback) {
 		})
 		.catch(e => {console.error(e)});
 };
+
+export function getModel(mark) {
+	const URL = `http://api.auto.ria.com/categories/1/marks/${mark}/models`;
+
+	return fetch(URL)
+		.then(resp => resp.json())
+		.catch(e => {console.error(e)});
+}
+
+export function getAverage(mark, model, year) {
+	const URL = `http://api.auto.ria.com/average?marka_id=${mark}&model_id=${model}&yers=${year}`;
+
+	return fetch(URL)
+		.then(resp => resp.json())
+		.catch(e => {console.error(e)});
+}
 
 console.info('auto-ria module');

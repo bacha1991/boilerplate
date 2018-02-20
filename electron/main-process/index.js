@@ -1,7 +1,4 @@
-import { autoRiaModule } from './advertisement-sites';
+import * as autoRia from './advertisement-sites/auto-ria';
 
-const mainProcesses = {
-	autoRiaModule
-};
+export const autoRiaModule = Object.assign({}, autoRia);
 
-export default mainProcesses;
